@@ -138,12 +138,16 @@ class PostPagesTests(TestCase):
         self.assertNotEqual(old_posts, new_posts)
 
     def test_follow(self):
-        '''Проверка возможности подписаться/отписаться на автора'''
-        Follow.objects.get_or_create(user=self.no_author, author=self.author)
-        follow = Follow.objects.filter(user=self.no_author, author=self.author)
-        self.assertTrue(follow.exists())
-        follow.delete()
-        self.assertFalse(follow.exists())
+        """Проверка возможности подписаться на автора"""
+        self.authorized_client.get(reverse(
+            'posts:profile_follow', args=[self.author]), follow=True)
+        self.assertEqual(Follow.objects.count(), 1)
+
+    def test_unfollow(self):
+        """Проверка возможности отписки от автора"""
+        self.authorized_client.get(reverse(
+            'posts:profile_unfollow', args=[self.author]), follow=True)
+        self.assertEqual(Follow.objects.count(), 0)
 
     def test_follow_index(self):
         """Запись появляется в ленте тех, кто подписан на автора

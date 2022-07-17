@@ -21,7 +21,7 @@ class Group(models.Model):
         verbose_name_plural = 'Группы'
 
     def __str__(self) -> str:
-        return self.title
+        return self.title[:30]
 
 
 class Post(models.Model):
@@ -67,15 +67,20 @@ class Comment(models.Model):
     post = models.ForeignKey(
         Post,
         related_name='comments',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        verbose_name='Текст поста'
     )
     author = models.ForeignKey(
         User,
         related_name='comments',
         on_delete=models.SET_NULL,
+        verbose_name='Автор',
         null=True
     )
-    text = models.TextField(help_text='Текст нового комментария')
+    text = models.TextField(
+        help_text='Текст нового комментария',
+        verbose_name='Текст коментария'
+    )
     created = models.DateTimeField(
         auto_now_add=True,
         verbose_name='Дата публикации'
@@ -92,11 +97,13 @@ class Follow(models.Model):
     user = models.ForeignKey(
         User,
         related_name='follower',
+        verbose_name='Подписчик',
         on_delete=models.CASCADE
     )
     author = models.ForeignKey(
         User,
         related_name='following',
+        verbose_name='Подписка',
         on_delete=models.CASCADE
     )
 
