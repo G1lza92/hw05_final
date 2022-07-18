@@ -43,7 +43,7 @@
   </article>
   <br>
   {% if post.group %} 
-    <p>Группа: {{post.group}}</p>        
+    <p>Группа: {{ group.title }}</p>        
     <a href="{% url 'posts:group_list' post.group.slug %}">все записи группы</a>
   {% endif %}      
   <hr>

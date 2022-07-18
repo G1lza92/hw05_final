@@ -59,8 +59,8 @@ class Post(models.Model):
         verbose_name = 'Пост'
         verbose_name_plural = 'Посты'
 
-    def __str__(self):
-        return self.text
+    def __str__(self) -> str:
+        return f'{self.author} - {self.text}'[:30]
 
 
 class Comment(models.Model):
@@ -88,9 +88,11 @@ class Comment(models.Model):
 
     class Meta:
         ordering = ['-created']
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии'
 
-    def __str__(self):
-        return self.text
+    def __str__(self) -> str:
+        return self.text[:30]
 
 
 class Follow(models.Model):
@@ -107,5 +109,5 @@ class Follow(models.Model):
         on_delete=models.CASCADE
     )
 
-    def __str__(self):
-        return self.user, self.author
+    def __str__(self) -> str:
+        return f'Подписка {self.user} на {self.author}'
