@@ -89,7 +89,7 @@ class PostPagesTests(TestCase):
             ),
             'profile': reverse(
                 'posts:profile',
-                kwargs={'username': self.author}
+                kwargs={'username': self.author.username}
             )
         }
         response = self.authorized_client.get(pages_reverses[page])
